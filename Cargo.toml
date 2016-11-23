@@ -12,9 +12,6 @@ description = """
 Handlebars template CLI that allows for passing in values to replace place holders in file. It can also do more complex things
 like pass in an input json file and output a file or send it to stdout.
 """
-name = "lsiotemplate"
-version = "0.1.0"
-authors = ["Chris Jones <cj@hanscj.com>"]
 
 [dependencies]
 handlebars = "*"
