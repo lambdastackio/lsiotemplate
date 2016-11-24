@@ -93,13 +93,18 @@ dependencies = [
 [[package]]
 name = "handlebars"
 version = "0.22.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "log 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "pest 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "quick-error 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.21 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "handlebars"
+version = "0.22.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+replace = "handlebars 0.22.0"
 
 [[package]]
 name = "idna"

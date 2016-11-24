@@ -21,3 +21,6 @@ clap = "2"
 env_logger = "0.3"
 lsio = "0.1"
 rustc-serialize = "0.3"
+
+[replace]
+"handlebars:0.22.0" = { path = "/Users/chrisjones/Downloads/handlebars-rust-0.22.0" }

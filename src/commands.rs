@@ -17,11 +17,14 @@ use std::io::{BufReader, Read, Seek, SeekFrom, Write};
 use std::fs::File;
 
 use term;
-//use rustc_serialize::json;
+use rustc_serialize::json;
+use rustc_serialize::json::{Json, ToJson};
 //use rustc_serialize::base64::{STANDARD, ToBase64};
+use std::collections::BTreeMap;
 
 use clap::ArgMatches;
-use handlebars::{Context, TemplateRenderError};
+use handlebars::{Context, TemplateRenderError, JsonRender};
+
 //use url::Url;
 use lsio::error::Error;
 
@@ -69,12 +72,12 @@ fn json(matches: &ArgMatches,
         client: &Client)
         -> Result<(), Error>
 {
-    let data_str = client.data.clone();
-    let data = Context::wraps(&data_str);
+    let data_str: String = client.data.clone();
+    // NB: This is a critical step which the docs for handlebars doesn't mention. The Json::Object must be created
+    // and passed into Context::wraps.
+    let data_obj = Json::from_str(&data_str).unwrap();
+    let mut data = Context::wraps(&data_obj);
     let mut output: File;
-
-    println!("{}", data_str);
-    println!("{:?}", data);
 
     match File::create(&client.output_file) {
         Ok(file) => { output = file; },
@@ -94,8 +97,6 @@ fn json(matches: &ArgMatches,
                 },
             }
 
-            println!("1 {:?}", template);
-
             match client.handlebars.template_renderw2(&mut template, &data, &mut output) {
                 Ok(_) => {},
                 Err(e) => {
@@ -105,8 +106,6 @@ fn json(matches: &ArgMatches,
         },
         _ => {
             let mut template = client.template.clone();
-
-            println!("2 {:?}", template);
 
             match client.handlebars.template_renderw(&mut template, &data, &mut output) {
                 Ok(_) => {},
