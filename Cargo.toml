@@ -15,6 +15,8 @@ like pass in an input json file and output a file or send it to stdout.
 
 [dependencies]
 handlebars = "*"
+url = "1"
+term = "0.4"
 clap = "2"
 env_logger = "0.3"
 lsio = "0.1"
