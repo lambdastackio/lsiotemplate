@@ -144,6 +144,8 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2016 LambdaStack All rights reserved.</span>
 <span class='comment'>//</span>
@@ -242,6 +244,8 @@
        .<span class='ident'>short</span>(<span class='string'>&quot;q&quot;</span>)
        .<span class='ident'>long</span>(<span class='string'>&quot;quiet&quot;</span>)
        .<span class='ident'>help</span>(<span class='string'>&quot;No output to stdout is produced&quot;</span>))
+    .<span class='ident'>subcommand</span>(<span class='ident'>SubCommand</span>::<span class='ident'>with_name</span>(<span class='string'>&quot;ini&quot;</span>)
+       .<span class='ident'>about</span>(<span class='string'>&quot;ini format of input data&quot;</span>))
     .<span class='ident'>subcommand</span>(<span class='ident'>SubCommand</span>::<span class='ident'>with_name</span>(<span class='string'>&quot;json&quot;</span>)
        .<span class='ident'>about</span>(<span class='string'>&quot;json format of input data&quot;</span>))
     .<span class='ident'>subcommand</span>(<span class='ident'>SubCommand</span>::<span class='ident'>with_name</span>(<span class='string'>&quot;yaml&quot;</span>)
