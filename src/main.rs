@@ -145,7 +145,7 @@ fn main() {
     }
 
     // NOTE: If the CLI info passed in does not meet the requirements then build_cli will panic!
-    let matches = cli::build_cli("s3lsio", home.to_str().unwrap_or(""), &version).get_matches();
+    let matches = cli::build_cli("lsiotemplate", home.to_str().unwrap_or(""), &version).get_matches();
 
     if matches.is_present("generate-bash-completions") {
         cli::build_cli("lsiotemplate", home.to_str().unwrap_or(""), &version)

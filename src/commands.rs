@@ -65,7 +65,7 @@ pub fn commands(matches: &ArgMatches, cmd: Commands, client: &mut Client) -> Res
         /// version of the name is added as the value so that they originals can be looked up
         /// if you need to add the original values of the key or section.
         /// If the key or section name does not contain an `.` or ` ` then it's skipped and if
-        /// there are no modifications then the BTreeMaps are not added. 
+        /// there are no modifications then the BTreeMaps are not added.
         Commands::ini => {
             let result = ini(matches, client);
         },
@@ -81,6 +81,7 @@ fn ini(matches: &ArgMatches,
     match data_str(client) {
         Ok(data) => {
             // Convert from ini to json
+            //let mut sections: Vec<BTreeMap<String,Json>> = Vec::new();
             let mut kv_btreemap = BTreeMap::new();
             let mut _sections = BTreeMap::new();
             let mut _keys = BTreeMap::new();
@@ -114,7 +115,7 @@ fn ini(matches: &ArgMatches,
                             _sections.insert(section_name.clone().replace(".", "_"), section_name.clone());
                         }
                         kv_btreemap.insert(section_name.replace(".", "_"), kv_prop.to_json());
-
+                        //sections.push(kv_btreemap);
                     }
 
                     if _keys.len() > 0 {

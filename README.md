@@ -9,7 +9,7 @@ OR
 
 Homebrew and other packages will come later
 
-Uses handlebars template language to allow you add template variables to files and then dynamically replace them via the command line or via an input *JSON* or *YAML* file and then output the results to a file or stdout.
+Uses handlebars template language to allow you add template variables to files and then dynamically replace them via the command line or via an input *JSON* or *YAML*  or *INI* file and then output the results to a file or stdout.
 
 Very useful for build environments that need to change based on data.
 
