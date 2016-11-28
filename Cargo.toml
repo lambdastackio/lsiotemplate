@@ -10,7 +10,8 @@ homepage = "https://lambdastackio.github.io/lsiotemplate/lsiotemplate"
 documentation = "https://lambdastackio.github.io/lsiotemplate/lsiotemplate"
 description = """
 Handlebars template CLI that allows for passing in values to replace place holders in file. It can also do more complex things
-like pass in an input json file and output a file or send it to stdout.
+like pass in an input json file and output a file or send it to stdout. It also converts yaml to json that is then feed
+into handlebars for normal template features.
 """
 
 [dependencies]

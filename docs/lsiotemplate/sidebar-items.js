@@ -1,1 +1,1 @@
-initSidebarItems({});
+initSidebarItems({"enum":[["Commands","Commands"],["DataTypes","DataTypes - Data is either input via string or file"],["OutputFormat","Allows you to set the output type for stderr and stdout."],["TemplateTypes","TemplateTypes"]],"struct":[["Client","Client struct that will carry options around."],["ErrorOutput","Allows you to control Error output."],["Output","Allows you to control non-Error output."]]});
