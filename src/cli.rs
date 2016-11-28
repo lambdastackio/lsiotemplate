@@ -95,6 +95,8 @@ pub fn build_cli<'a>(app: &str, home: &'a str, version: &'a str) -> App<'a, 'a> 
        .short("q")
        .long("quiet")
        .help("No output to stdout is produced"))
+    .subcommand(SubCommand::with_name("ini")
+       .about("ini format of input data"))
     .subcommand(SubCommand::with_name("json")
        .about("json format of input data"))
     .subcommand(SubCommand::with_name("yaml")

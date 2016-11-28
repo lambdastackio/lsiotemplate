@@ -31,6 +31,7 @@ extern crate url;
 #[macro_use]
 extern crate clap;
 extern crate yaml_rust;
+extern crate ini;
 
 use std::io::{self, Write};
 use std::env;
@@ -92,6 +93,7 @@ pub struct Output {
 pub enum Commands {
     json,
     yaml,
+    ini,
 }
 
 /// TemplateTypes
@@ -239,6 +241,7 @@ fn main() {
     let res = match matches.subcommand() {
         ("json", Some(sub_matches)) => commands::commands(sub_matches, Commands::json, &mut client),
         ("yaml", Some(sub_matches)) => commands::commands(sub_matches, Commands::yaml, &mut client),
+        ("ini", Some(sub_matches)) => commands::commands(sub_matches, Commands::ini, &mut client),
         (e, _) => {
             let error = format!("{}", e);
             println_color_quiet!(client.is_quiet, term::color::RED, "{}\n\n", error);

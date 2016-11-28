@@ -1,6 +1,6 @@
 [package]
 name = "lsiotemplate"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Chris Jones"]
 license = "Apache-2.0"
 readme = "README.md"
@@ -10,13 +10,14 @@ homepage = "https://lambdastackio.github.io/lsiotemplate/lsiotemplate"
 documentation = "https://lambdastackio.github.io/lsiotemplate/lsiotemplate"
 description = """
 Handlebars template CLI that allows for passing in values to replace place holders in file. It can also do more complex things
-like pass in an input json file and output a file or send it to stdout. It also converts yaml to json that is then feed
-into handlebars for normal template features.
+like pass in an input json file and output a file or send it to stdout. It also converts yaml to json and ini to json
+that is then feed into handlebars for normal template features.
 """
 
 [dependencies]
 handlebars = "0"
 yaml-rust = "0"
+rust-ini = "0"
 url = "1"
 term = "0.4"
 clap = "2"
