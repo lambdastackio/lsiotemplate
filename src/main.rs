@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #![allow(unused_imports)]
+#![allow(unused_mut)]
+#![allow(unused_variables)]
 
 // NOTE: This attribute only needs to be set once.
 #![doc(html_logo_url = "https://lambdastackio.github.io/static/images/lambdastack-200x200.png",
@@ -28,6 +30,7 @@ extern crate term;
 extern crate url;
 #[macro_use]
 extern crate clap;
+extern crate yaml_rust;
 
 use std::io::{self, Write};
 use std::env;
@@ -39,7 +42,7 @@ use handlebars::Handlebars;
 use clap::Shell;
 
 use lsio::config::ConfigFile;
-//use lsio::error::Error;
+use lsio::error::Error;
 
 mod cli;
 mod commands;
@@ -88,12 +91,21 @@ pub struct Output {
 #[allow(non_camel_case_types)]
 pub enum Commands {
     json,
+    yaml,
 }
 
-/// Commands
+/// TemplateTypes
 ///
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum TemplateTypes {
+    String,
+    File,
+}
+
+/// DataTypes - Data is either input via string or file
+///
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum DataTypes {
     String,
     File,
 }
@@ -105,6 +117,7 @@ pub struct Client
     //pub config: &'a mut config::Config,
     pub handlebars: Handlebars,
     pub data: String,
+    pub data_type: DataTypes,
     pub template: String,
     pub template_type: TemplateTypes,
     pub output_file: String,
@@ -143,14 +156,15 @@ fn main() {
         is_quiet = true;
     }
 
-    let data = matches.value_of("data").unwrap_or("").to_string();
+    let data = matches.value_of("data").unwrap_or("");
+    let data_file = matches.value_of("file").unwrap_or("");
     let proxy_str = matches.value_of("proxy");
     let output_file = matches.value_of("output").unwrap_or("");
     let input = matches.value_of("input").unwrap_or("");
     let template_file = matches.value_of("template").unwrap_or("");
 
-    if data.is_empty() {
-        println_color_quiet!(is_quiet, term::color::RED, "-d must be specified with valid json data.\n\n");
+    if data.is_empty() && data_file.is_empty() {
+        println_color_quiet!(is_quiet, term::color::RED, "-d must be specified with valid json data or -f with a valid path to a data file.\n\n");
         println_color_quiet!(is_quiet, term::color::RED, "{}", matches.usage());
         ::std::process::exit(1);
     }
@@ -209,7 +223,8 @@ fn main() {
     let mut client = Client {
         //config: &mut config,
         handlebars: handlebars,
-        data: data,
+        data: if data.is_empty() {data_file.to_string()} else {data.to_string()},
+        data_type: if data.is_empty() {DataTypes::File} else {DataTypes::String},
         template: if input.is_empty() {template_file.to_string()} else {input.to_string()},
         template_type: if input.is_empty() {TemplateTypes::File} else {TemplateTypes::String},
         output_file: output_file.to_string(),
@@ -223,11 +238,12 @@ fn main() {
 
     let res = match matches.subcommand() {
         ("json", Some(sub_matches)) => commands::commands(sub_matches, Commands::json, &mut client),
-        //(e, _) => {
-        //    println_color_quiet!(client.is_quiet, term::color::RED, "{}", e);
-        //    Err(e)
-        //},
-        (_,_) => {Ok(())},
+        ("yaml", Some(sub_matches)) => commands::commands(sub_matches, Commands::yaml, &mut client),
+        (e, _) => {
+            let error = format!("{}", e);
+            println_color_quiet!(client.is_quiet, term::color::RED, "{}\n\n", error);
+            Err(Error::from(Error::CommandNotRecognized(error)))
+        },
     };
 
     if let Err(e) = res {

@@ -1,0 +1,17 @@
+---
+user: Player-Yaml
+position: QB
+number: 14
+stats: 89.99
+active: true
+depth:
+  depth1:
+    depth2a: 2a
+    depth2b:
+      - 2b1
+      - 2b2
+      - 2b3
+teams_played:
+  - team1
+  - team2
+  - team3
